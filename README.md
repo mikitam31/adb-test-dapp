@@ -12,23 +12,33 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Connectors
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+It lists all connectors by now, but I tested only Metamask for now. Other connectors are configured, but need to set correct env variables to make it work correctly.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Environment variable
 
-## Learn More
+Create `.env.local` with below content and run the app. If the env variable is changed, you have to restart app.
+```
+NEXT_PUBLIC_RPC_URL_1=https://mainnet.infura.io/v3/84842078b09946638c03157f83405213
+NEXT_PUBLIC_RPC_URL_4=https://rinkeby.infura.io/v3/84842078b09946638c03157f83405213
+NEXT_PUBLIC_FORTMATIC_API_KEY=pk_test_A6260FCBAA2EBDFB
+NEXT_PUBLIC_MAGIC_API_KEY=pk_test_398B82F5F0E88874
+NEXT_PUBLIC_PORTIS_DAPP_ID=e9be171c-2b7f-4ff0-8db9-327707511ee2
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Further improvements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Move all logics into Redux
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Move balance update with Redux Thunk action
+- Move transaction trigger, error, pending status to redux store
+- Move connector status to redux
 
-## Deploy on Vercel
+### Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Since it's one page test app, I didn't create container components and wrapper components to separate dapp and redux side. 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Move defi related to logics to wrapper(root) component
+- Create container components for redux
+- Create common components based on Material UI components to make it transparent
