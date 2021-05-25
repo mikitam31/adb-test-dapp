@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
+import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import theme from '../src/theme'
+
+import store from '../redux/store'
 
 const MyApp = (props: AppProps) => {
   const { Component, pageProps } = props
@@ -18,16 +18,13 @@ const MyApp = (props: AppProps) => {
   }, [])
 
   return (
-    <>
+    <Provider store={store}>
       <Head>
-        <title>My page</title>
+        <title>ADB Test App by Mikita</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </>
+      <Component {...pageProps} />
+    </Provider>
   )
 }
 
