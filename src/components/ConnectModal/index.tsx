@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { ConnectorNames, ConnectorType } from '../../connectors'
 import {
   connectModalOpen,
-  connector,
+  getConnector,
   toggleConnectorModal
 } from '../../redux/slices/appSlice'
 
@@ -28,7 +28,7 @@ export interface ConnectModalProps {
 const ConnectModal = ({ open, onClose }: ConnectModalProps) => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const connectorName: ConnectorType = useAppSelector(connector)
+  const connectorName: ConnectorType = useAppSelector(getConnector)
 
   const handleClose = () => {
     onClose(connectorName)

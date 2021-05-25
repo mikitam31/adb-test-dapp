@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { BigNumber } from 'ethers'
 
 import { RootState } from '../store'
 import { ConnectorNames } from '../../connectors'
@@ -9,12 +10,12 @@ interface AppState {
   connectModalOpen: boolean,
   connector: ConnectorType,
   connecting: boolean,
-  balance: Balance
+  balance: BalanceType
 }
 
-interface Balance {
-  eth: number,
-  dai: number
+export interface BalanceType {
+  eth?: BigNumber,
+  dai?: BigNumber
 }
 
 const initialState = {
@@ -22,9 +23,9 @@ const initialState = {
   connector: null,
   connecting: false,
   balance: {
-    eth: 0,
-    dai: 0
-  } as Balance
+    eth: BigNumber.from(0),
+    dai: BigNumber.from(0)
+  } as BalanceType
 } as AppState;
 
 export const appSlice = createSlice({
@@ -45,8 +46,8 @@ export const appSlice = createSlice({
       state.connector = null
       state.connecting = false
     },
-    updateBalance: (state, action: PayloadAction<Balance>) => {
-      state.balance = action.payload
+    updateBalance: (state, action: PayloadAction<BalanceType>) => {
+      state.balance = {...state.balance, ...action.payload}
     }
   },
 });
@@ -60,8 +61,8 @@ export const {
 } = appSlice.actions
 
 export const connectModalOpen = (state: RootState) => state.app.connectModalOpen
-export const connector = (state: RootState) => state.app.connector
-export const connecting = (state: RootState) => state.app.connecting
-export const getBalance = (state: RootState): Balance => state.app.balance
+export const getConnector = (state: RootState) => state.app.connector
+export const getConnecting = (state: RootState) => state.app.connecting
+export const getBalance = (state: RootState): BalanceType => state.app.balance
 
 export default appSlice.reducer;
