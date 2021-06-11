@@ -14,8 +14,9 @@ interface AppState {
 }
 
 export interface BalanceType {
-  eth?: BigNumber,
-  dai?: BigNumber
+  eth?: Number,
+  bt?: Number,
+  ct?: Number
 }
 
 const initialState = {
@@ -23,8 +24,9 @@ const initialState = {
   connector: null,
   connecting: false,
   balance: {
-    eth: BigNumber.from(0),
-    dai: BigNumber.from(0)
+    eth: 0,
+    bt: 0,
+    ct: 0
   } as BalanceType
 } as AppState;
 

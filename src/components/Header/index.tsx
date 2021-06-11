@@ -31,7 +31,7 @@ const Header = () => {
   const isDarkMode = useAppSelector(selectIsDark)
   const isConnecting = useAppSelector(getConnecting)
   const balance: BalanceType = useAppSelector(getBalance)
-  const { account, error } = useWeb3React<Web3Provider>()
+  const { account, error, active, deactivate } = useWeb3React<Web3Provider>()
 
   return (
     <AppBar position="static">
@@ -50,7 +50,7 @@ const Header = () => {
         { (account && !error) && (
           <div>
             <Typography>{getAccountName(account)}</Typography>
-            <Typography>{formatEther(balance.eth)} ETH</Typography>
+            <Typography>{balance.eth} ETH</Typography>
           </div>
         )}
         { (!account && !error) && (
@@ -61,6 +61,15 @@ const Header = () => {
             disabled={isConnecting}
           >
             { isConnecting ? 'CONNECTING' : 'CONNECT WALLET' }
+          </Button>
+        )}
+        { (error || active) && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={deactivate}
+          >
+            DISCONNECT
           </Button>
         )}
       </Toolbar>
